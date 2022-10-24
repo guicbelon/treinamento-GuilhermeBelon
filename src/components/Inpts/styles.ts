@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const Inpt = styled.div`
+export const Cont = styled.div`
     border: 1px solid;
     border-radius: 16px;
     height: 64px;
