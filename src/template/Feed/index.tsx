@@ -1,22 +1,68 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import PiuServices from 'services/PiuServices';
+import UserServices from 'services/UserServices';
+import { User } from 'interfaces/User';
+import { Piu } from 'interfaces/Piu';
 import NavComponent from 'components/NavComponent';
 import NewComponent from 'components/News';
 import LogoComponent from 'components/Logo';
 import TNewComponent from 'components/TitleNews';
-import TopBarComponent from 'components/TopBar';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PiuComponent from 'components/Piu';
+import TopBarComponent from 'components/TopBar';
+
 import * as S from './styles';
 
-// interface Piu_items {nome: string; piu: string; image: string;}
+function Feed() {
+    const [valueInput, setValueInput] = useState('');
+    const [Error, setError] = useState(false);
+    const [piusArray, setPiusArray] = useState<Piu[]>([]);
+    const [usersArray, setUsersArray] = useState<User[]>([]);
 
-const Feed = () => {
-    const [like] = useState(true);
-    // const feed = []
-    // function create_feed(){}
-    // const [like, setlike] = useState(false);
-    // function tolike() {
-    //    setlike(true);
-    // }
+    // eslint-disable-next-line camelcase
+    function UseInput(e: any): void {
+        setValueInput(e.target.value);
+        if (e.target.value.length > 140) {
+            setError(true);
+        } else {
+            setError(false);
+        }
+    }
+
+    const getPiusFunct = async () => {
+        const response = await PiuServices.getPius();
+        setPiusArray(response);
+    };
+    useEffect(() => {
+        getPiusFunct();
+    }, []);
+
+    async function updateFeed() {
+        const response2 = await PiuServices.getPius();
+        setPiusArray(response2);
+        getPiusFunct();
+    }
+
+    async function postPiu() {
+        if (valueInput.length <= 140 && valueInput.length > 0) {
+            await PiuServices.createPiu(valueInput);
+            setValueInput('');
+        }
+        updateFeed();
+    }
+
+    useEffect(() => {
+        const getUsersFunct = async () => {
+            const response = await UserServices.getUsers();
+            setUsersArray(response);
+        };
+        getUsersFunct();
+    }, []);
+
+    function GetUser({ userId }: { userId: string }): Array<any> {
+        const userTofind = usersArray.find((e) => userId === e.id);
+        return [userTofind?.avatar, userTofind?.username];
+    }
     return (
         <S.MainBody>
             <S.LeftBar>
@@ -31,35 +77,32 @@ const Feed = () => {
             <S.Info>
                 <TopBarComponent />
                 <S.Inpt>
-                    <S.PosterImg src="/assets/p1.svg" />
-                    <S.Ipt placeholder="O que você está pensando?" />
-                    <S.Poster src="/assets/to_post.svg" />
+                    <S.PosterImg src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMHozIxtgJx0gbDdzgKy7hcRkDoP7houIjY65EDeY&s" />
+                    <S.Ipt
+                        type="text"
+                        error={Error}
+                        placeholder="O que você está pensando?"
+                        value={valueInput}
+                        // eslint-disable-next-line camelcase
+                        onChange={UseInput}
+                    />
+                    <S.Poster src="/assets/to_post.svg" onClick={postPiu} />
                 </S.Inpt>
                 <S.Feed>
-                    <PiuComponent
-                        image="/assets/p1.svg"
-                        name="Pessoa 1"
-                        piu="lasanhaaaaaaaaaaaaaaaaa é bom dms, slc! AQdorooooo"
-                        selected={like}
-                    />
-                    <PiuComponent
-                        image="/assets/p2.svg"
-                        name="Pessoa 2"
-                        piu="glrrr, algúem vendendo ingressos para a Nostalgia?????"
-                        selected={false}
-                    />
-                    <PiuComponent
-                        image="/assets/p3.svg"
-                        name="Pessoa 3"
-                        piu="nmrl, piupiwer eh bem melhor que twiteer..."
-                        selected={false}
-                    />
-                    <PiuComponent
-                        image="/assets/p4.svg"
-                        name="Pessoa 4"
-                        piu="eu não aguento mais cálculo 4!!!"
-                        selected={false}
-                    />
+                    {piusArray.map((thisPiu: Piu) => {
+                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                        const thisUser = GetUser({ userId: thisPiu.userId });
+                        return (
+                            <PiuComponent
+                                photo={thisUser[0]}
+                                name={thisUser[1]}
+                                piu={thisPiu.text}
+                                likes={thisPiu.likes}
+                                piuId={thisPiu.id}
+                                userId={thisPiu.userId}
+                            />
+                        );
+                    })}
                 </S.Feed>
             </S.Info>
             <S.Nav>
@@ -71,6 +114,6 @@ const Feed = () => {
             </S.Nav>
         </S.MainBody>
     );
-};
+}
 
 export default Feed;

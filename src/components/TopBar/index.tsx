@@ -6,7 +6,7 @@ export type TBarProps = {};
 // eslint-disable-next-line no-empty-pattern
 const TopBarComponent: React.FC<TBarProps> = ({}) => (
     <S.Cont>
-        <S.Prof src="/assets/myprofile.svg" />
+        <S.Prof src="/assets/myprofilev2.svg" />
         <S.Search src="/assets/searchbar.svg" />
     </S.Cont>
 );

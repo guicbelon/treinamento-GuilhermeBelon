@@ -1,7 +1,12 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import styled from 'styled-components';
 
-interface Props {
+interface likeProps {
     selected: boolean;
+}
+
+interface piuProps {
+    myPiu: boolean;
 }
 
 export const Cont = styled.div`
@@ -21,11 +26,13 @@ export const Top = styled.div`
     flex-direction: row;
     align-items: center;
     gap: 16px;
+    padding-left: 16px;
 `;
 
 export const Icon = styled.img`
     height: 40px;
-    padding-left: 16px;
+    width: 40px;
+    border-radius: 20px;
 `;
 
 export const Nm = styled.div`
@@ -36,6 +43,25 @@ export const Nm = styled.div`
     align-items: center;
     color: white;
 `;
+export const Delete = styled.div<piuProps>`
+    height: 64px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    padding-right: 24px;
+`;
+
+export const DeleteIcon = styled.div<piuProps>`
+    height: 60px;
+    width: 80px;
+    background-size: 100% 56px;
+    background-position: right;
+    background-repeat: no-repeat;
+    background-image: ${({ myPiu }) =>
+        myPiu ? 'url(/assets/delete.svg)' : 'none'};
+    cursor: ${({ myPiu }) => (myPiu ? 'pointer' : 'normal')};
+`;
 
 export const Mid = styled.div`
     width: 90%;
@@ -45,13 +71,24 @@ export const Mid = styled.div`
     align-items: center;
     font-family: 'Poppins';
     font-style: bold;
-    font-weight: 600;
-    font-size: 32px;
     align-items: center;
     color: white;
     border: 1px solid;
     border-radius: 16px;
     padding: 8px;
+    font-weight: 600px;
+    @media only screen and (min-width: 750px) {
+        font-size: 28px;
+    }
+    @media only screen and (min-width: 900px) {
+        font-size: 30px;
+    }
+    @media only screen and (min-width: 1000px) {
+        font-size: 32px;
+    }
+    @media only screen and (min-width: 1100px) {
+        font-size: 36px;
+    }
 `;
 
 export const Low = styled.div`
@@ -63,13 +100,14 @@ export const Low = styled.div`
     justify-content: space-around;
     padding-top: 16px;
     padding-bottom: 16px;
+    padding-left: 8px;
+    gap: 4px;
 `;
 
 export const LBut = styled.div`
     font-weight: 600;
     height: 56px;
     font-size: 20px;
-    width: 200px;
     border: 1px solid;
     border-radius: 16px;
     color: white;
@@ -79,9 +117,21 @@ export const LBut = styled.div`
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    @media only screen and (min-width: 750px) {
+        width: 176px;
+    }
+    @media only screen and (min-width: 900px) {
+        width: 184px;
+    }
+    @media only screen and (min-width: 1000px) {
+        width: 192px;
+    }
+    @media only screen and (min-width: 1100px) {
+        width: 200px;
+    }
 `;
 
-export const LkBut = styled.img<Props>`
+export const LkBut = styled.img<likeProps>`
     height: 48px;
     width: 48px;
     padding: 8px;
@@ -89,17 +139,21 @@ export const LkBut = styled.img<Props>`
     background-color: ${({ selected }) => (selected ? 'red' : 'none')};
 `;
 
-export const ShBut = styled.img`
-    height: 48px;
-    width: 48px;
-    padding: 8px;
-    border-radius: 24px;
-`;
-
 export const LButTxt = styled.div`
     font-weight: 600;
     font-size: 20px;
     width: 80%;
+    color: white;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+`;
+
+export const LnumTxt = styled.div`
+    font-weight: 600;
+    font-size: 30px;
+    width: 200px;
     color: white;
     align-items: center;
     display: flex;

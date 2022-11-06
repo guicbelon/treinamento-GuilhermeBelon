@@ -3,7 +3,7 @@ import React, { useContext, useState, createContext } from 'react';
 
 import api from 'services/api';
 
-import UserService from 'services/UserService';
+import UserService from 'services/UserServices';
 
 import User from '../interfaces/User';
 

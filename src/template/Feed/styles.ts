@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+interface Props {
+    error: boolean;
+}
+
 export const MainBody = styled.body`
     padding-top: 28px;
     width: 100%;
@@ -61,6 +65,8 @@ export const Info = styled.div`
 `;
 export const Inpt = styled.div`
     border: 1px solid;
+    padding-left: 8px;
+    padding-right: 8px;
     border-radius: 16px;
     background: rgba(93, 89, 102, 0.5);
     height: 64px;
@@ -72,7 +78,7 @@ export const Inpt = styled.div`
     border-color: white;
 `;
 
-export const Ipt = styled.input`
+export const Ipt = styled.input<Props>`
     padding-left: 8px;
     border-radius: 16px;
     opacity: 100%;
@@ -83,19 +89,44 @@ export const Ipt = styled.input`
     background: none;
     border: 0px;
     font-weight: 600;
-    font-size: 20px;
+    font-size: 16px;
     font-style: white;
+    background-color: ${({ error }) => (error ? 'red' : 'none')};
 `;
 
 export const Poster = styled.img`
-    height: 48x;
     cursor: pointer;
-    padding-right: 8px;
+    @media only screen and (min-width: 750px) {
+        height: 32px;
+    }
+    @media only screen and (min-width: 900px) {
+        height: 36px;
+    }
+    @media only screen and (min-width: 1000px) {
+        height: 40px;
+    }
+    @media only screen and (min-width: 1100px) {
+        height: 44px;
+    }
 `;
 
 export const PosterImg = styled.img`
-    height: 48px;
-    padding-left: 8px;
+    @media only screen and (min-width: 750px) {
+        height: 32px;
+        border-radius: 16px;
+    }
+    @media only screen and (min-width: 900px) {
+        height: 36px;
+        border-radius: 18px;
+    }
+    @media only screen and (min-width: 1000px) {
+        height: 40px;
+        border-radius: 20px;
+    }
+    @media only screen and (min-width: 1100px) {
+        height: 44px;
+        border-radius: 22px;
+    }
 `;
 
 export const Feed = styled.div`

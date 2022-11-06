@@ -10,5 +10,13 @@ export const Cont = styled.div`
 `;
 
 export const Icon = styled.img`
-    height: 64px;
+    @media only screen and (min-width: 750px) {
+        height: 52px;
+    }
+    @media only screen and (min-width: 900px) {
+        height: 58px;
+    }
+    @media only screen and (min-width: 1100px) {
+        height: 64px;
+    }
 `;

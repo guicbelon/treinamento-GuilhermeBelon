@@ -8,5 +8,16 @@ export const Cont = styled.div`
 `;
 
 export const Icon = styled.img`
-    width: 144px;
+    @media only screen and (min-width: 750px) {
+        width: 96px;
+    }
+    @media only screen and (min-width: 900px) {
+        width: 112px;
+    }
+    @media only screen and (min-width: 1000px) {
+        width: 120px;
+    }
+    @media only screen and (min-width: 1100px) {
+        width: 128px;
+    }
 `;
