@@ -4,6 +4,6 @@ import * as S from './styles';
 export type InptProps = {};
 
 // eslint-disable-next-line no-empty-pattern
-const Inpt: React.FC<InptProps> = ({}) => <S.Cont> oi</S.Cont>;
+const Inpt: React.FC<InptProps> = ({}) => <S.Cont> teste </S.Cont>;
 
 export default Inpt;
