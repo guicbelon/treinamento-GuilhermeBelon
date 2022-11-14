@@ -1,7 +1,4 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import PiuServices from 'services/PiuServices';
-import UserServices from 'services/UserServices';
-import { User } from 'interfaces/User';
 import { Piu } from 'interfaces/Piu';
 import NavComponent from 'components/NavComponent';
 import NewComponent from 'components/News';
@@ -10,6 +7,9 @@ import TNewComponent from 'components/TitleNews';
 import { useEffect, useState } from 'react';
 import PiuComponent from 'components/Piu';
 import TopBarComponent from 'components/TopBar';
+import useAuth from 'hooks/useAuth';
+import { useRouter } from 'next/router';
+import { setCookie, destroyCookie } from 'nookies';
 
 import * as S from './styles';
 
@@ -17,9 +17,11 @@ function Feed() {
     const [valueInput, setValueInput] = useState('');
     const [Error, setError] = useState(false);
     const [piusArray, setPiusArray] = useState<Piu[]>([]);
-    const [usersArray, setUsersArray] = useState<User[]>([]);
+    const { userLogged } = useAuth();
+    const router = useRouter();
+    // const { logout } = useAuth();
 
-    // eslint-disable-next-line camelcase
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function UseInput(e: any): void {
         setValueInput(e.target.value);
         if (e.target.value.length > 140) {
@@ -50,19 +52,14 @@ function Feed() {
         }
         updateFeed();
     }
-
-    useEffect(() => {
-        const getUsersFunct = async () => {
-            const response = await UserServices.getUsers();
-            setUsersArray(response);
-        };
-        getUsersFunct();
-    }, []);
-
-    function GetUser({ userId }: { userId: string }): Array<any> {
-        const userTofind = usersArray.find((e) => userId === e.id);
-        return [userTofind?.avatar, userTofind?.username];
+    function Out() {
+        // logout;
+        destroyCookie(undefined, '@Piupiuwer:token');
+        destroyCookie(undefined, '@Piupiwer:UserId');
+        setCookie(undefined, '@Piupiwer:token', '');
+        router.push('/login');
     }
+
     return (
         <S.MainBody>
             <S.LeftBar>
@@ -77,7 +74,7 @@ function Feed() {
             <S.Info>
                 <TopBarComponent />
                 <S.Inpt>
-                    <S.PosterImg src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSMHozIxtgJx0gbDdzgKy7hcRkDoP7houIjY65EDeY&s" />
+                    <S.PosterImg src={userLogged.avatar} />
                     <S.Ipt
                         type="text"
                         error={Error}
@@ -90,21 +87,20 @@ function Feed() {
                 </S.Inpt>
                 <S.Feed>
                     {piusArray.map((thisPiu: Piu) => {
-                        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                        const thisUser = GetUser({ userId: thisPiu.userId });
                         return (
                             <PiuComponent
-                                photo={thisUser[0]}
-                                name={thisUser[1]}
                                 piu={thisPiu.text}
                                 likes={thisPiu.likes}
                                 piuId={thisPiu.id}
-                                userId={thisPiu.userId}
+                                user={thisPiu.user}
                             />
                         );
                     })}
                 </S.Feed>
             </S.Info>
+            <S.LogOut>
+                <S.LOBut onClick={Out}>SAIR</S.LOBut>
+            </S.LogOut>
             <S.Nav>
                 <NavComponent image="/assets/group.svg" />
                 <NavComponent image="/assets/library.svg" />

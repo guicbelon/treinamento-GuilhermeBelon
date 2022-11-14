@@ -17,7 +17,10 @@ export const Icon = styled.img`
     @media only screen and (min-width: 1000px) {
         width: 120px;
     }
-    @media only screen and (min-width: 1100px) {
+    @media only screen and (min-width: 1050px) {
         width: 128px;
+    }
+    @media only screen and (min-width: 1100px) {
+        width: 136px;
     }
 `;

@@ -1,49 +1,42 @@
-import { destroyCookie } from 'nookies';
-import React, { useContext, useState, createContext } from 'react';
+import { setCookie, destroyCookie, parseCookies } from 'nookies';
+import React, { useContext, useState, createContext, useEffect } from 'react';
 
-import api from 'services/api';
-
-import UserService from 'services/UserServices';
-
-import User from '../interfaces/User';
-
-interface ILoginRequest {
-    email: string;
-    password: string;
-}
+import { User } from 'interfaces/User';
+import UserServices from 'services/UserServices';
 
 interface AuthContextData {
-    user: User;
-    login: (data: ILoginRequest) => void;
+    userLogged: User;
     logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 
 export const AuthProvider: React.FC = ({ children }) => {
-    const [user, setUser] = useState({} as User);
+    const [userData, setUserData] = useState<User>({} as User);
 
-    const login = async (data: ILoginRequest) => {
-        try {
-            const response = await UserService.login(data);
+    useEffect(() => {
+        const aux = async () => {
+            const { '@Piupiwer:token': token, '@piupiuwer:UserId': userId } =
+                parseCookies();
+            if (token) {
+                const userLogged = await UserServices.getUserById(userId);
+                setUserData(userLogged);
+                // console.log(token)
+            }
+        };
+        aux();
+    });
 
-            api.defaults.headers.common = {
-                Authorization: `Bearer ${response.token}`
-            };
-
-            setUser(response.user);
-        } catch (error) {
-            // Errors handling
-        }
-    };
-
-    const logout = () => {
-        destroyCookie(undefined, '@app:token');
-        destroyCookie(undefined, '@app:useId');
+    const logout = (): void => {
+        destroyCookie(undefined, '@Piupiuwer:token');
+        destroyCookie(undefined, '@Piupiwer:UserId');
+        setCookie(undefined, '@Piupiwer:token', '', {
+            maxAge: 60 * 60 * 24
+        });
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout }}>
+        <AuthContext.Provider value={{ userLogged: userData, logout }}>
             {children}
         </AuthContext.Provider>
     );

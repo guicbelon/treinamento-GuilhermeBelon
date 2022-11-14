@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+import { User } from 'interfaces/User';
 import { PiuLike } from './PiuLike';
 
 export interface Piu {
@@ -8,4 +9,5 @@ export interface Piu {
     text: string;
     created_at: Date;
     updated_at: Date;
+    user: User;
 }

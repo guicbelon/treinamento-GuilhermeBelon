@@ -22,6 +22,9 @@ export const MainBody = styled.body`
     flex-direction: row;
     justify-content: space-between;
     align-items: top;
+    // border: solid;
+    // height: fit-content(20em)
+    // position: absolute;
 `;
 
 export const LeftBar = styled.div`
@@ -90,7 +93,10 @@ export const Ipt = styled.input<Props>`
     border: 0px;
     font-weight: 600;
     font-size: 16px;
-    font-style: white;
+    font-display: white;
+    ::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+    }
     background-color: ${({ error }) => (error ? 'red' : 'none')};
 `;
 
@@ -142,6 +148,28 @@ export const Feed = styled.div`
     justify-content: space-between;
 `;
 
+export const LogOut = styled.div`
+    width: 8%;
+    height: 8vh;
+    position: fixed;
+    left: 76%;
+    top: 28px;
+    display: flex;
+    justify-content: center;
+`;
+
+export const LOBut = styled.button`
+    width: 100%;
+    height: 6vh;
+    border: 0;
+    font-weight: 600;
+    font-size: 16px;
+    color: red;
+    border-radius: 2vh;
+    cursor: pointer;
+    //left: 76%;
+`;
+
 export const Nav = styled.div`
     border-radius: 16px;
     background: rgba(93, 89, 102, 0.5);
@@ -149,7 +177,7 @@ export const Nav = styled.div`
     height: 75vh;
     border-color: red;
     position: fixed;
-    top: 28px;
+    top: 14vh;
     left: 76%;
     display: flex;
     flex-direction: column;

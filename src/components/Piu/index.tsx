@@ -2,27 +2,25 @@
 import { useState } from 'react';
 import PiuServices from 'services/PiuServices';
 import { PiuLike } from 'interfaces/PiuLike';
+import { User } from 'interfaces/User';
+import useAuth from 'hooks/useAuth';
 import * as S from './styles';
 
-// import {User} from 'interfaces/User';
-const myId = 'a05afcf5-8e35-41fc-8225-39a8af015444';
-
 type NewType = {
-    photo: string;
-    name: string;
     piu: string;
     likes: Array<PiuLike>;
     piuId: string;
-    userId: string;
+    user: User;
 };
 
 export type PiuProps = NewType;
 
-function PiuComponent({ photo, name, piu, likes, piuId, userId }: PiuProps) {
+function PiuComponent({ piu, likes, piuId, user }: PiuProps) {
     const [LikeLength, setLikeLength] = useState(likes.length);
+    const { userLogged } = useAuth();
 
     function checkMyPiu() {
-        if (userId === myId) {
+        if (user.id === userLogged.id) {
             return true;
         }
         return false;
@@ -41,15 +39,13 @@ function PiuComponent({ photo, name, piu, likes, piuId, userId }: PiuProps) {
     }
 
     function checkMyLike(): boolean {
-        const givenLike = likes.find((e) => myId === e.userId);
+        const givenLike = likes.find((e) => userLogged.id === e.userId);
         if (givenLike) {
             return true;
         }
         return false;
     }
-
     const [like, setlike] = useState(checkMyLike());
-
     function change_like() {
         if (like === false) {
             setlike(true);
@@ -64,8 +60,8 @@ function PiuComponent({ photo, name, piu, likes, piuId, userId }: PiuProps) {
     return (
         <S.Cont>
             <S.Top>
-                <S.Icon src={photo} />
-                <S.Nm>{name}</S.Nm>
+                <S.Icon src={user.avatar} />
+                <S.Nm>{user.username}</S.Nm>
                 <S.Delete myPiu={myPiu}>
                     <S.DeleteIcon myPiu={myPiu} onClick={deleteThisPiu}>
                         {' '}

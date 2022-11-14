@@ -78,16 +78,16 @@ export const Mid = styled.div`
     padding: 8px;
     font-weight: 600px;
     @media only screen and (min-width: 750px) {
-        font-size: 28px;
+        font-size: 20px;
     }
     @media only screen and (min-width: 900px) {
-        font-size: 30px;
+        font-size: 24px;
     }
     @media only screen and (min-width: 1000px) {
-        font-size: 32px;
+        font-size: 28px;
     }
     @media only screen and (min-width: 1100px) {
-        font-size: 36px;
+        font-size: 32px;
     }
 `;
 
@@ -152,7 +152,7 @@ export const LButTxt = styled.div`
 
 export const LnumTxt = styled.div`
     font-weight: 600;
-    font-size: 30px;
+    font-size: 24px;
     width: 200px;
     color: white;
     align-items: center;
