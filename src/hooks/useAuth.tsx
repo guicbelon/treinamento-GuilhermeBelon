@@ -1,7 +1,6 @@
 import { setCookie, destroyCookie, parseCookies } from 'nookies';
 import React, { useContext, useState, createContext, useEffect } from 'react';
 import { useRouter } from 'next/router';
-
 import { User } from 'interfaces/User';
 import UserServices from 'services/UserServices';
 
