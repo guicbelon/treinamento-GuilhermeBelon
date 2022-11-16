@@ -4,7 +4,7 @@ import FeedTemplate from 'template/Feed';
 import { parseCookies } from 'nookies';
 
 const Begin: NextPage = () => {
-    const { '@Piupiwer:token': token } = parseCookies();
+    const { '@Piupiuwer:token': token } = parseCookies();
     if (token) {
         return <FeedTemplate />;
     }

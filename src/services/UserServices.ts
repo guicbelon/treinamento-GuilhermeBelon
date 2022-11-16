@@ -28,10 +28,10 @@ export default class UserServices {
             const response = await api.post('/sessions/login', info);
             const { token } = response.data;
             const userId = response.data.user.id;
-            setCookie(undefined, '@Piupiwer:token', token, {
+            setCookie(undefined, '@Piupiuwer:token', token, {
                 maxAge: 60 * 60 * 24
             });
-            setCookie(undefined, '@piupiuwer:UserId', userId, {
+            setCookie(undefined, '@Piupiuwer:UserId', userId, {
                 maxAge: 60 * 60 * 24
             });
             // eslint-disable-next-line @typescript-eslint/no-explicit-any

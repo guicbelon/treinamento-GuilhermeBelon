@@ -8,8 +8,6 @@ import { useEffect, useState } from 'react';
 import PiuComponent from 'components/Piu';
 import TopBarComponent from 'components/TopBar';
 import useAuth from 'hooks/useAuth';
-import { useRouter } from 'next/router';
-import { setCookie, destroyCookie } from 'nookies';
 
 import * as S from './styles';
 
@@ -17,9 +15,7 @@ function Feed() {
     const [valueInput, setValueInput] = useState('');
     const [Error, setError] = useState(false);
     const [piusArray, setPiusArray] = useState<Piu[]>([]);
-    const { userLogged } = useAuth();
-    const router = useRouter();
-    // const { logout } = useAuth();
+    const { userLogged, logout } = useAuth();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function UseInput(e: any): void {
@@ -51,13 +47,6 @@ function Feed() {
             setValueInput('');
         }
         updateFeed();
-    }
-    function Out() {
-        // logout;
-        destroyCookie(undefined, '@Piupiuwer:token');
-        destroyCookie(undefined, '@Piupiwer:UserId');
-        setCookie(undefined, '@Piupiwer:token', '');
-        router.push('/login');
     }
 
     return (
@@ -99,7 +88,7 @@ function Feed() {
                 </S.Feed>
             </S.Info>
             <S.LogOut>
-                <S.LOBut onClick={Out}>SAIR</S.LOBut>
+                <S.LOBut onClick={logout}>SAIR</S.LOBut>
             </S.LogOut>
             <S.Nav>
                 <NavComponent image="/assets/group.svg" />
